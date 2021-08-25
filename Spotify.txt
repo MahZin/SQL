@@ -1,0 +1,13 @@
+CREATE TABLE  data(
+	acousticness numeric,
+	artists text,
+	danceability numeric,
+	duration_ms numeric,
+	energy numeric,
+	explicit numeric,
+	id numeric NOT NULL,
+	instrumentalness numeric,
+	key numeric,
+	liveness numeric
+	PRIMARY KEY (id)
+)

@@ -1,0 +1,100 @@
+# to convert one data type into another:
+SELECT CAST('5' AS INTEGER)
+
+# PostgreSQL CAST operator
+SELECT '5'::INTEGER
+
+# can use in a SELECT QUERY with a column name instead of a single instance
+SELECT CAST(date AS TIMESTAMP)
+FROM table
+
+SELECT CAST('5' AS INTEGER) AS new_int
+
+SELECT '5'::INTEGER
+
+# However, the following won't work:
+SELECT CAST('five' AS INTEGER) AS new_int
+# because 'five' is a string; ERROR: invalid input syntax for type integer: "five"
+SELECT 'ten'::INTEGER
+# same reasoning
+
+# how would we grab the number of digits in an id column? ex. 10521
+# we would convert the data type of the id column into a string and use char_length()
+SELECT CHAR_LENGTH(CAST(inventory_id AS VARCHAR)) FROM rental
+
+# NULLIF - takes in 2 inputs and returns NULL if both are equal, otherwise it returns the first argument passed 
+# used to avoid errors caused by having NULL value(s)
+NULLIF(arg1,arg2)
+
+NULLIF(10,10)
+# returns NULL
+
+# example
+CREATE TABLE depts(
+ first_name VARCHAR(50),
+ department VARCHAR(50)
+)
+
+INSERT INTO depts(
+ first_name,
+ department
+)
+VALUES
+('Vinton','A'),
+('Lauren','A'),
+('Claire','B');
+
+SELECT(
+ SUM(CASE WHEN department = 'A' THEN 1 ELSE 0 END) / 
+ SUM(CASE WHEN department = 'B' THEN 1 ELSE 0 END)
+) AS department_ratio
+FROM depts
+
+# let's make a null value
+DELETE FROM depts
+WHERE department = 'B'
+
+# now let's see what happens when we operate with null values
+SELECT(
+ SUM(CASE WHEN department = 'A' THEN 1 ELSE 0 END) / 
+ SUM(CASE WHEN department = 'B' THEN 1 ELSE 0 END)
+) AS department_ratio
+FROM depts
+# ERROR: division by zero (null is treated like 0 in this case since we specified ELSE 0)
+
+# now we use NULLIF()
+SELECT(
+ SUM(CASE WHEN department = 'A' THEN 1 ELSE 0 END) / 
+ NULLIF(SUM(CASE WHEN department = 'B' THEN 1 ELSE 0 END), 0)
+) AS department_ratio
+FROM depts
+# this code returns null since the result of the SUM command returned 0, equal to the 2nd argument
+
+# VIEW - a database object that stores a query. Can be accessed as a virtual table in PostgreSQL
+CREATE VIEW customer_info AS
+SELECT first_name,last_name,address FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+# the name of our VIEW is customer_info
+
+# all the code after customer_info AS is stored in that view
+SELECT * FROM customer_info
+# the above code will return the table we wanted and is now easier to access via customer_info instead of typing/ctrl+c it all again
+
+# we can also replace a VIEW with an updated one (we add district column):
+CREATE OR REPLACE VIEW customer_info AS
+SELECT first_name,last_name,address, district FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+# to drop a VIEW:
+DROP VIEW customer_info
+
+# to drop but check in case of errors:
+DROP VIEW IF EXISTS customer_info
+
+# to rename a VIEW:
+ALTER VIEW customer_info RENAME to c_info
+
+

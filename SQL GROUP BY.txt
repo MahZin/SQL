@@ -1,0 +1,34 @@
+# aggregate functions:
+AVG() # Returns a float value. use ROUND(AVG(),2) to return 2 decimal places
+SUM()
+COUNT()
+MAX()
+MIN()
+
+# examples
+SELECT MAX(price), MIN(price) FROM Goods;
+
+SELECT COUNT(*) FROM Goods;
+
+SELECT ROUND(AVG(price),2) FROM Goods;
+
+# using GROUP BY to aggregate columns per specified category (must appear after FORM or WHERE statement):
+# in the SELECT statement, columns referenced must be in the GROUP BY call or have an aggregate function
+# WHERE statements should not affect results from aggregate function
+SELECT brand, color, SUM(price) 
+FROM gpu
+WHERE brand IN ('EVGA', 'ASUS')
+GROUP BY brand, color
+
+# to sort results based off aggregate, reference the entire function
+SELECT brand, SUM(price)
+FROM gpu
+GROUP BY SUM(price)
+
+# using HAVING clause to filter after an aggregate function has taken place
+# used since WHERE filters before aggregate function takes place
+SELECT brand, SUM(price)
+FROM gpu
+WHERE brand != 'EVGA'
+GROUP BY brand
+HAVING SUM(price) > 1000

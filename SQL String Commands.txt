@@ -1,0 +1,46 @@
+# to grab timezone information:
+SHOW TIMEZONE
+
+# to get current timestamp information:
+SELECT NOW()
+
+SELECT TIMEOFDAY()
+
+# to get today's date:
+SELECT CURRENT_DATE
+
+# use EXTRACT() to obtain a sub-component of a date value (YEAR, MONTH, DAY, WEEK, QUARTER):
+EXTRACT(YEAR FROM date_col) FROM table
+
+# to return the current age given a timestamp
+AGE(date_col)
+
+# to convert data types to text; to format timestamps:
+TO_CHAR(date_col, 'mm-dd-yyyy')
+
+SELECT TO_CHAR(payment_date, 'MONTH-YYYY')
+FROM payment
+
+# we can rename the results we extracted:
+SELECT EXTRACT(YEAR FROM payment_date) AS year
+FROM payment
+
+# we can use mathematical operators in SELECT statements
+SELECT ROUND(mining_rate/replacement_cost)*100 AS percent_cost
+FROM gpu
+
+# commands to edit, combine, and alter text data columns:
+SELECT LENGTH(first_name FROM customer
+
+SELECT upper(first_name)
+FROM customer
+
+# to concatenate two strings:
+SELECT first_name || last_name
+FROM customer
+
+SELECT LOWER(LEFT(last_name, 1) || LOWER(first_name) || '@yahoo.com'
+FROM customer
+
+SELECT first_name || ' ' || last_name AS full_name
+FROM customer 

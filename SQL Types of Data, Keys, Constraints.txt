@@ -1,0 +1,50 @@
+# types of data: 
+	Boolean: True or False
+	Character: char, varchar, text
+	Numeric: integer, floating-point numbers
+	Temporal: date, time, timestamp, interval
+	UUID: Universally Unique Identifers
+	Array: stores array of strings, numbers, etc.
+	JSON
+	Hstore key-value pair
+	Special types: network address, geometric data
+
+# EXAMPLE: how would we store a phone number value?
+# we would use VARCHAR because we wouldn't perform mathematical operations on it
+
+# Primary keys: column/group of columns used to identify a row uniquely in a table i.e. customer_id column
+
+# Foreign keys: field/group of fields in a table that uniquely identifies a row in another table
+# defined in a table that references to the primary key of the other table
+
+# referencing/child table: the table that contains the foreign key
+# referenced table/parent table: the table that is referenced by the foreign key
+
+# a table can have +1 foreign keys, depending on its relationship with other tables
+
+# EXAMPLE: in a database table for gpu transactions, each gpu row has its unique gpu_id and customer_id
+# customer_id is a foreign key that references the customer table's primary key
+
+# we can use constraints to define columns as being a primary key, or attaching a foreign key relationship to another table
+# we can check constraints under the Constraints tab under a table
+
+# Constraints: rules enforced on data columns in a table. Prevents invalid data being entered into the database
+# Two main types of constraints:
+	Column Constraints: constrains data in a column
+	Table Constraints: constrains data in an entire table
+
+	# Most common constraints:
+		NOT NULL constraint: column cannot have NULL value
+		UNIQUE constraint: all values in a column must be different
+		PRIMARY key: uniquely identifies each row/record in a database table
+		FOREIGN key: constrains data based on columns in other tables
+		CHECK constraint: ensures all values in a column satisfy certain specified conditions
+		EXCLUSION constraint: if any two rows are compared (>,<,=) on the specified column/expression, 
+		not all of these comparisons will return TRUE
+		REFERENCES constraint: used to constrain stored value in column that must exist in another table's column
+
+# to force values stored in () listed columns to be unique
+UNIQUE(column_list) 
+
+# to define the primary key that consists of multiple columns
+PRIMARY KEY(column_list)

@@ -1,0 +1,64 @@
+# syntax template for SELECT statement
+SELECT column_name FROM table_name
+
+# to select all columns from a table:
+SELECT * FROM table_name
+
+# the semicolon is a statement terminator i.e. end of a statement
+SELECT column_1, column 3 FROM table_1; 
+
+# to select unique values from a column(s) (parentheses are optional):
+SELECT DISTINCT(column_4) FROM table_2;
+
+# to count number of rows in a table based off of a condition:
+SELECT COUNT(name) FROM People;
+
+# to count distinct number of rows :
+SELECT COUNT(DISTINCT(name) FROM People;
+
+# to set conditions i.e. filter on columns for what rows we want returned:
+SELECT name, age FROM People
+WHERE name = 'Travis' AND age >= 30;
+
+SELECT name, age FROM People
+WHERE name != 'Travis' AND age < 30;
+
+SELECT name, age FROM People 
+WHERE age > 18 OR age < 18;
+
+# to sort rows based on ascending or descending order:
+SELECT name, age FROM People
+ORDER BY name ASC;
+
+SELECT name, age, ethnicity FROM People
+ORDER BY name, age DESC;
+
+# to grab first or last set number of rows (similar to head())
+SELECT name FROM People
+ORDER BY name DESC
+LIMIT 10;
+
+# to grab values between conditions: (can be used for dates in standard format YYYY-MM-DD) *care for timestamps
+SELECT age FROM People
+WHERE age BETWEEN 20 and 30;
+
+SELECT age FROM People
+WHERE age NOT BETWEEN 20 and 30; 
+
+SELECT * FROM People
+WHERE login_date BETWEEM '2021-01-01 AND '2021-11-01';
+
+# to check/filter values based off of a condition:
+SELECT name, age FROM People 
+WHERE name IN ('Travis', 'Bob', 'Jacky');
+
+# to pattern match string data: (% matches any character sequence, _ matches 1 character)
+SELECT * FROM People
+WHERE name LIKE 'T%';
+
+SELECT name FROM People
+WHERE name LIKE '_imm%';
+
+# to pattern match string data regardless of case-sensitivity:
+SELECT * FROM People
+WHERE name ILIKE 't%';

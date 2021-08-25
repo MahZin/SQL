@@ -1,0 +1,36 @@
+# using sub-query
+SELECT student,grade
+FROM test_scores
+WHERE grade > 
+(SELECT AVG(grade) FROM test_scores)
+
+# to use a sub-query on a separate table:
+SELECT student,grade
+FROM test_scores
+WHERE student IN
+(SELECT student FROM honor_roll_table)
+
+SELECT student,grade
+FROM test_scores
+WHERE student IN
+(('Bob', 'Timmy', 'Ashley'))
+
+# to check for the existence of rows in a sub-query"
+SELECT col_name 
+FROM table_name
+WHERE EXISTS
+(SELECT col_name FROM table_name
+ WHERE condition);
+
+SELECT first_name, last_name 
+FROM customer
+WHERE EXISTS
+(SELECT * FROM payment
+ WHERE payment.customer_id = customer.customer_id
+ AND amount > 10)
+
+# using self-join to compare or match columns/values in table to other columns/values in the same table
+SELECT table1.col, table2.col
+FROM table AS table1
+JOIN table AS table2
+ON table1.some_col = table2.other_col

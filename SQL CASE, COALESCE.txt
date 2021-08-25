@@ -1,0 +1,84 @@
+# CASE: to execute SQL code only when certain conditions are met (like IF/ELSE in python):
+# "general" CASE:
+CASE
+ WHEN condition1 THEN result1
+ WHEN condition2 THEN result2
+ ELSE some_other_result
+END
+
+SELECT a,
+CASE WHEN a=1 THEN 'one'
+     WHEN a=2 THEN 'two'
+ELSE 'other'
+END
+FROM test;
+# this code will construct a table with two columns: a and Case.
+
+# CASE expression syntax - evaluates an expression then compares the result w/each value in the WHEN clauses sequentially:
+CASE expression
+ WHEN value1 THEN result1
+ WHEN value2 THEN result2
+ ELSE some_other_result
+END
+
+SELECT a,
+ CASE a WHEN 1 THEN 'one'
+  WHEN 2 THEN 'two'
+  ELSE 'other'
+ END 
+FROM test;
+# less flexible than general CASE because this checks for equality, not > or < i.e. is more of a column call
+
+# example of general CASE
+SELECT customer_id, 
+CASE
+ WHEN (customer_id <= 100) THEN 'Premium'
+ WHEN (customer_id BETWEEN 100 and 200) THEN 'Plus'
+ ELSE 'Normal'
+END
+FROM customer
+
+# examples of CASE expression (to pick random raffle winners)
+SELECT customer_id,
+CASE customer_id
+ WHEN 2 THEN 'Winner'
+ WHEN 5 THEN 'Second Place'
+ ELSE 'Normal'
+END AS raffle_results
+FROM customer
+
+SELECT
+SUM(CASE rental_rate
+	WHEN 0.99 THEN 1
+	ELSE 0
+END) AS bargains,
+SUM(CASE rental_rate
+	WHEN 2.99 THEN 1
+	ELSE 0
+END) AS regular
+SUM(CASE rental_rate
+	WHEN 4.99 THEN 1
+	ELSE 0
+END) AS premium
+FROM film
+
+# COALESCE: to return the first argument that is not null (if all arguments are null, returns null):
+# function: substituting null values in a table with another value
+COALESCE(arg_1,arg_2,...,arg_n)
+
+SELECT COALESCE(1,2)
+# returns 1
+
+SELECT COALESCE(NULL,2,3)
+# returns 2
+
+# example of a table with 3 columns: Item, Price, Discount
+# we want to create a column of the Final price, but we have a null value for one of the Discount rows
+SELECT item, (price - discount) AS final
+FROM table
+# above code will result in a null value for one of the rows
+
+# this is where COALESCE fixes the issue
+SELECT item, (price - COALESCE(discount, 0)) AS final
+FROM table
+# above code account for null values in the DISCOUNT column; we get a result of the initial Price value

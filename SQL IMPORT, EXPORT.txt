@@ -1,0 +1,30 @@
+# importing data from a .csv file to an already existing table
+
+# *Note: the file path to your outside file must be 100% correct
+
+# working through with an example:
+# 1. Create an excel sheet with columns: A, B, C and row values: 1-9 vertically placed top-bot
+# 2. Download the sheet as a .csv file
+# 3. Open properties and copy file path
+# 4. Create a table in SQL:
+CREATE TABLE simple(
+ a INTEGER,
+ b INTEGER,
+ c INTEGER
+) 
+
+SELECT * FROM simple
+# above code will create a table called simple in SQL with 3 rows: a,b,c with all datatype as INTEGER
+# 5. Right-click the table under Tables tab and click Import/Export
+# 6. Click to change switch to Import. Under Filename locate the created excel table
+# *Note: Under Columns tab we can check and uncheck columns we want to import
+# *Note: Under Miscellaeneous we can switch Header to Yes, for the first row A, B, C so we don't duplicate information i.e. PostGreSQL will ignore first row
+# # 7. Choose Delimiter. We choose , (comma) since it's a comma separated value table then click OK
+
+SELECT * FROM simple
+
+# to export:
+# 1. Right-click Import/Export
+# 2. Decide what columns you want to export
+# 3. Choose where you want to save the file. Rename if needed, choose Delimiter etc. then press OK
+

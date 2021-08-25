@@ -1,0 +1,71 @@
+# to create an alias for a column/result i.e renaming (very useful for joining tables):
+# AS operator occurs at the end of a query (can't be used inside a WHERE operator)
+SELECT price AS total_spent
+FROM gpu;
+
+SELECT SUM(price) AS total_spent
+FROM gpu;
+
+SELECT customer_id, SUM(price) AS total_spent
+FROM gpu
+GROUP BY customer_id
+HAVING SUM(price) > 100
+
+# we can not do this:
+SELECT customer_id, SUM(price) AS total_spent
+FROM gpu
+GROUP BY customer_id
+HAVING total_spent > 100
+# because total_spent isn't defined until the end
+
+# INNER JOIN: combines values that match in both tables
+SELECT * FROM table_b
+INNER JOIN table_a
+ON table_a.col_match = table_b.col_match
+
+SELECT gpu_id, gpu.customer_id, first_name
+FROM gpu
+INNER JOIN customer
+ON gpu.customer_id = customer.customer_id
+
+# FULL OUTER JOIN: combines every value from both tables/columns
+SELECT * FROM table_a
+FULL OUTER JOIN table_b
+ON table_a.col_match = table_b.col_match
+
+SELECT * FROM gpu
+FULL OUTER JOIN customer
+ON gpu.customer_id = customer.customer_id
+
+# to find a combined result where there are only unique values respective to each table:
+SELECT * FROM gpu 
+FULL OUTER JOIN customer
+WHERE gpu.customer_id IS null OR customer.gpu_id IS null
+
+# to get a set of records that are present in both left & right table, with value of NULL if not a match in right table:
+# imagine a venn diagram where the left and middle are shaded, but not the right area
+SELECT * FROM table_a
+LEFT OUTER JOIN table_b # can also use LEFT JOIN
+ON table_a.col_match = table_b.col_match
+
+# to find values exclusive to table_a:
+SELECT * FROM table_a
+LEFT OUTER JOIN table_b
+ON table_a.col_match = table_b.col_match
+WHERE table_b.id IS null
+
+# RIGHT JOIN: same as LEFT JOIN but procedure is reversed
+SELECT * FROM table_a
+RIGHT OUTER JOIN table_b
+ON table_a.col_match = table_b.col_match
+
+# to find values exclusive to table_b
+SELECT * FROM table_a
+RIGHT OUTER JOIN table_b
+ON table_a.col_match = table_b.col_match
+WHERE table_a.id IS null
+
+# to concatenate two results together of two or more SELECT statements
+SELECT column_names FROM table_1
+UNION
+SELECT column_names FROM table_2;
